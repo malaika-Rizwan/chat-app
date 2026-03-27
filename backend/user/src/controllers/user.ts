@@ -36,16 +36,8 @@ export const loginUser = TryCatch(async (req: Request, res: Response) => {
   };
   await publishMessage(OTP_QUEUE, JSON.stringify(message));
 
-  const user = await User.findOne({ email: normalizedEmail });
-  if (!user) {
-    return res.status(404).json({
-      message: "No account found for this email. Please register first.",
-    });
-  }
-
   return res.status(200).json({
     message: "OTP sent successfully",
-    user,
   });
 });
 

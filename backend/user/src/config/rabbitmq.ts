@@ -28,13 +28,12 @@ export const getRabbitMQChannel = () => {
 };
 
 export const publishMessage = async (queueName: string, message: string) => {
-    if(!channel){
-        console.error("RabbitMQ channel is not initialized");
-        return;
-    }
-    await channel.assertQueue(queueName,{
-        durable:true,
-    });
-    await channel.sendToQueue(queueName,Buffer.from(message));
-    console.log(`Message sent to ${queueName}`);
+  if (!channel) {
+    throw new Error("RabbitMQ channel is not initialized");
+  }
+  await channel.assertQueue(queueName, {
+    durable: true,
+  });
+  await channel.sendToQueue(queueName, Buffer.from(message));
+  console.log(`Message sent to ${queueName}`);
 };

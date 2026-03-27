@@ -6,7 +6,9 @@ import userRoutes from "./routes/user.js";
 import { connectToRabbitMQ } from "./config/rabbitmq.js";
 import cors from "cors";
 dotenv.config();
-connectToRabbitMQ();
+connectToRabbitMQ().catch((err) => {
+  console.error("RabbitMQ unavailable (user service will still run)", err);
+});
 
 const app = express();
 app.use(express.json());
